@@ -1,26 +1,18 @@
 from django.contrib.auth import authenticate, login, logout
 
 from rest_framework import status
-from rest_framework import generics, status
+from rest_framework import generics, status, authentication, permissions 
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import filters
 
-from .serializers import RegisterSerializer, ChangePasswordSerializer
+from django_filters.rest_framework import DjangoFilterBackend
+
+from .serializers import RegisterSerializer, ChangePasswordSerializer, TournamentSerializer
+from .models import Tournament
 
 # Create your views here.
-
-from django.views.decorators.csrf import ensure_csrf_cookie
-from rest_framework.decorators import api_view, permission_classes
-
-
-
-@ensure_csrf_cookie
-@api_view(['GET'])
-@permission_classes([AllowAny])
-def get_csrf_token(request):
-    return Response({"detail": "CSRF cookie set"})
-
 
 class RegisterAPI(generics.CreateAPIView):
     serializer_class = RegisterSerializer
@@ -69,3 +61,29 @@ class ChangePasswordAPI(APIView):
         serializer.save()
         
         return Response({"message": "Contraseña cambiada"}, status=200)
+
+
+class TournamentListCreateAPI(generics.ListCreateAPIView):
+    queryset = Tournament.objects.all()
+    serializer_class = TournamentSerializer
+    authentication_classes = [
+        authentication.SessionAuthentication,
+        authentication.BasicAuthentication
+    ]
+    permission_classes = [permissions.IsAuthenticated]
+
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
+    filterset_fields = ['state', 'start_date', 'mode']
+    ordering_fields  = ['start_date', 'name']
+    search_fields    = ['name']
+
+
+class TournamentDetailAPI(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Tournament.objects.all()
+    serializer_class = TournamentSerializer
+    authentication_classes = [
+        authentication.SessionAuthentication,
+        authentication.BasicAuthentication
+    ]
+    permission_classes = [permissions.IsAuthenticated]
+
