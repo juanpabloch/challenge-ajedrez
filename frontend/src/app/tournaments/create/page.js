@@ -44,51 +44,60 @@ export default function RegisterPage() {
     };
 
     return (
-        <>
-            <h1>Crear Torneo</h1>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    <input placeholder="Nombre" type="text" value={name} onChange={(e)=> setName(e.target.value)} required/>
-                </label>
-                <br />
-                <label>
-                    <textarea value={description} onChange={(e)=> setDescription(e.target.value)} placeholder="Descripcion" rows={4} cols={50} required/>
-                </label>
-                <br />
-                <label>
-                    <select name="mode" id="mode" onChange={(e) => setMode(e.target.value)} required>
-                        <option value="">MODO</option>
-                        <option value="bullet">Bullet</option>
-                        <option value="standard">Standard</option>
-                    </select>
-                </label>
-                <br />
-                <label>
-                    Fecha inicio
-                    <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} required/>
-                </label>
-                <br />
-                <label>
-                    Hora inicio
-                    <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} required />
-                </label>
-                <br />
-                <label>
-                    Jugadores
-                    <input type="number" value={players} onChange={(e) => setPlayers(e.target.value)} required />
-                </label>
-                <br />
-                <label>
-                    Premio
-                    <input type="number" value={prize} onChange={(e) => setPrize(e.target.value)} required />
-                </label>
-                <br />
+        <div className='tournament_register_page'>
+            <div className="container">
+                <h1>Crear Torneo</h1>
+                <form onSubmit={handleSubmit}>
+                    <div className="inputs">
+                        <div className="left">
+                            <label>
+                                <input placeholder="Nombre torneo" type="text" value={name} onChange={(e)=> setName(e.target.value)} required/>
+                            </label>
+                            
+                            <label>
+                                <textarea value={description} onChange={(e)=> setDescription(e.target.value)} placeholder="Descripción" rows={10} cols={50} required/>
+                            </label>
+                        </div>
+                        
+                        <div className="right">
+                            <label>
+                                <select name="mode" id="mode" onChange={(e) => setMode(e.target.value)} required>
+                                    <option value="">MODO</option>
+                                    <option value="bullet">Bullet</option>
+                                    <option value="standard">Standard</option>
+                                </select>
+                            </label>
+                            
+                            <label>
+                                <span>Fecha inicio</span>
+                                <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} required/>
+                            </label>
+                            
+                            <label>
+                                <span>Hora inicio</span>
+                                <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} required />
+                            </label>
+                            
+                            <label>
+                                <span>Jugadores</span>
+                                <input type="number" value={players} onChange={(e) => setPlayers(e.target.value)} required />
+                            </label>
+                            
+                            <label>
+                                <span>Premio</span>
+                                <input type="number" value={prize} onChange={(e) => setPrize(e.target.value)} required />
+                            </label>
+                        </div>
+                    </div>
+                    
 
-                <button className='terms'>
-                    <Link href={'/tournaments'}>Cancelar</Link>
-                </button>
-                <button type="submit">Crear</button>
-            </form>
-        </>
+                    <div className="actionsBtn">
+                        <Link href={'/tournaments'} className='cancelBtn'>Cancelar</Link>
+                        <button type="submit">Crear</button>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
     );
 }

@@ -38,30 +38,41 @@ export default function TournamentsPage() {
         const timeStr = date.toLocaleTimeString('en-US', {
             hour: 'numeric', minute: '2-digit', hour12: true
         });
+        const mode = tournament.mode.charAt(0).toUpperCase() + tournament.mode.slice(1);
+        const modeImage = tournament.mode === 'bullet' ? '/bullet.svg' : '/standard.svg';
 
         return (
             <>
                 <td>{tournament.name}</td>
                 <td>{dateStr} {timeStr}</td>
-                <td>{tournament.mode}</td>
+                <td style={{ textAlign: 'left' }}><Image src={modeImage} alt='' width={20} height={20} /> {mode}</td>
                 <td>{tournament.prize} PTS</td>
+                <td>{tournament.state}</td>
             </>
         );
     }
 
     return (
-        <div>
+        <div className='tournaments_page'>
             <Navbar />
 
             <div className="tournaments">
-                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <table className='tournaments__table' cellSpacing="0" cellPadding="0">
                     <thead>
-                        <tr>
-                            <th>Torneo</th>
-                            <th>Fecha de inicio</th>
-                            <th>Modo</th>
-                            <th>Premio</th>
-                        </tr>
+                        {tournaments.length > 0 ? (   
+                            <tr>
+                                <th>Torneo</th>
+                                <th>Fecha de inicio</th>
+                                <th style={{ textAlign: 'left' }}>Modo</th>
+                                <th>Premio</th>
+                                <th>Estado</th>
+                            </tr>
+                        ) : (
+                            <tr>
+                                <th></th>
+                            </tr>
+                        )}
+                        
                     </thead>
 
                     <tbody>
@@ -79,7 +90,7 @@ export default function TournamentsPage() {
                             ))
                         ) : (
                             <tr>
-                                <td colSpan={4}>
+                                <td colSpan={4} className='tournaments__empty'>
                                     No hay torneos disponibles.
                                 </td>
                             </tr>
@@ -87,11 +98,12 @@ export default function TournamentsPage() {
                     </tbody>
                 </table>
 
-                <button onClick={() => router.push('/tournaments/create')}>Crear Torneo</button>
+                <button onClick={() => router.push('/tournaments/create')}>Crear</button>
             </div>
 
             <footer>
-                
+                <Image src={'/tournament.svg'} alt='tournament' width={100} height={100} />
+                <p>Torneos</p>
             </footer>
         </div>
     );

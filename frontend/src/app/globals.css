@@ -3,6 +3,7 @@
     --background-yellow: #F5E2A0;
     --background-orange: #E64734;
     --background-orange-dark: #ff270f;
+    --background-footer: #E03056;
 
     --border-radius: 50px;
     --border-color: #282828;
@@ -14,6 +15,10 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+}
+
+html {
+  font-size: 16px;
 }
 
 body{
@@ -278,6 +283,236 @@ body{
         .buttons{
             button, a{
                 font-size: 1.1rem;
+            }
+        }
+    }
+}
+
+
+/* TOURNAMENTS */
+.tournaments_page{
+
+    .tournaments{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+        height: 75vh;
+        /* padding-bottom: 280px; */
+
+
+        .tournaments__table{
+            width: 100%;
+            border-collapse: 'collapse';
+            color: var(--background-yellow); 
+            padding: 40px;
+
+            th{
+                text-transform: uppercase;
+                font-size: 2.188rem;
+                padding: 0.5rem 1rem;
+            }
+
+            td {
+                font-size: 1.7rem;
+                padding: 0.5rem 1rem;
+                text-align: center;
+            }
+
+            tbody tr:nth-child(even) {
+                background-color: #171717;
+            }
+            
+            tbody tr:nth-child(odd) {
+                background-color: #282828;
+            }
+
+            .tournaments__empty{
+                text-align: center;
+            }
+        }
+
+        .tournaments__table th,
+        .tournaments__table td {
+            border: none;
+        }
+
+
+        button{
+            text-align: center;
+            background-color: var(--background-yellow);
+            color: var(--background-footer);
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 20px 50px;
+            margin-bottom: 30px;
+            border: none;
+            cursor: pointer;
+
+            &:hover{
+                background-color: var(--background-footer);
+                color: var(--background-yellow);
+                transition: all 0.3s ease-in-out;
+            }
+        }
+    }
+
+    footer{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: var(--background-footer);
+        color: var(--background-yellow);
+        padding: 30px 60px;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        p{
+            font-size: 8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    }
+}
+
+
+/* TOURNAMENT REGISTER */
+.tournament_register_page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    .container{
+        background: var(--background-yellow);
+        color: var(--font-color-black);
+        padding: 40px;
+
+        h1{
+            text-align: center;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            font-size: 3rem;
+        }
+
+        form{
+            .inputs{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+
+                .left{
+                    flex: 1;
+                }
+
+                .right{
+                    flex: 1;
+
+                    input{
+                        width: 170px;
+                    }
+                }
+
+                label{
+                    display: block;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    flex-wrap: nowrap;
+                    border: 2px solid var(--background);
+                    margin-bottom: 7px;
+                    font-weight: bold;
+                    text-transform: uppercase;
+
+                    span{
+                        padding-left: 10px;
+                    }
+                }
+
+                input, textarea, select{
+                    width: 100%;
+                    background: var(--background);
+                    padding: 10px;
+                    font-size: .8rem;
+                    color: #ffffff;
+                    border: none;
+                }
+
+                input::placeholder, textarea::placeholder{
+                    color: #ffffff;
+                    text-transform: uppercase;
+                }
+
+                input:focus-visible, textarea:focus-visible, select:focus-visible{
+                    outline: none;
+                }
+
+                input::-webkit-outer-spin-button,
+                input::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
+
+                /* Firefox */
+                input[type=number] {
+                    -moz-appearance: textfield;
+                }
+
+
+            }
+
+            .actionsBtn{
+                text-align: right;
+
+                button, a{
+                    width: 150px;
+                    padding: 15px 0;
+                    font-size: 1.1rem;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                    border: none;
+                    background: transparent;
+
+                    transition: all 0.3s ease-in-out;
+                    cursor: pointer;
+                }
+
+                .cancelBtn{
+                    text-decoration: none;
+                    margin-right: 10px;
+                    padding: 14px 40px;
+                    font-size: 1.2rem;
+                    color: var(--font-color-black);
+
+                    &:hover{
+                        color: #ffffff !important;
+                        background: var(--border-color);
+                    }
+
+                    &:visited{
+                        color: var(--font-color-black);
+                    }
+                    &:focus-visible{
+                        outline: none;
+                    }
+                    &:active{
+                        color: var(--border-color);
+                    }
+                }
+
+                button[type="submit"]{
+                    background: var(--background-orange);
+                    color: #ffffff;
+
+                    &:hover{
+                        background: var(--background-orange-dark);
+                    }
+                }
             }
         }
     }
