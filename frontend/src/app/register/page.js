@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function RegisterPage() {
     const [fname, setFname] = useState('');
@@ -42,59 +43,67 @@ export default function RegisterPage() {
     };
 
     return (
-        <>
-            <section className='hero'>
-                <p>LOGO</p>
-                <Link href={'/'}>x</Link>
-            </section>
+        <div className='register_page'>
+            <div className="container">
+                <section className='hero'>
+                    <h2>LOGO EMPRESA</h2>
+                    <Link className='closeBtn' href={'/'}>
+                        <Image src={'/close.svg'} alt='close' width={30} height={30} />
+                    </Link>
+                </section>
 
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Nombre
-                    <input type="text" value={fname} onChange={(e)=> setFname(e.target.value)} required/>
-                </label>
-                <br />
-                <label>
-                    Apellido
-                    <input type="text" value={lname} onChange={(e)=> setLname(e.target.value)} required/>
-                </label>
-                <br />
-                <label>
-                    Nombre de usuario
-                    <input type="text" value={username} onChange={(e)=> setUsername(e.target.value)} required/>
-                </label>
-                <br />
-                <label>
-                    Correo Electrónico:
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
-                </label>
-                <br />
-                <label>
-                    Contraseña:
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                </label>
-                <br />
-                <label>
-                    Repetir contraseña:
-                    <input type="password" value={password2} onChange={(e) => setPassword2(e.target.value)} required />
-                </label>
-                <br />
-                <label>
-                    Lei y acepto los terminos y condiciones
-                    <input type="checkbox" value={terms} onChange={(e) => setTerms(e.target.checked)} required />
-                </label>
-                <br />
-                <button type="submit">Registrar</button>
-                <button className='terms'>
-                    <Link href={'terms'}>Terminos y condic</Link>
-                </button>
+                <form onSubmit={handleSubmit}>
+                    <label>
+                        Nombre
+                        <input type="text" value={fname} onChange={(e)=> setFname(e.target.value)} required/>
+                    </label>
+                    
+                    <label>
+                        Apellido
+                        <input type="text" value={lname} onChange={(e)=> setLname(e.target.value)} required/>
+                    </label>
+                    
+                    <label>
+                        Nombre de usuario
+                        <input type="text" value={username} onChange={(e)=> setUsername(e.target.value)} required/>
+                    </label>
+                    
+                    <label>
+                        Email
+                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
+                    </label>
+                    
+                    <label>
+                        Contraseña
+                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    </label>
+                    
+                    <label>
+                        Repetir contraseña
+                        <input type="password" value={password2} onChange={(e) => setPassword2(e.target.value)} required />
+                    </label>
+                    
+                    <label className='termsLabel'>
+                        <span>Leí y acepto los términos y condiciones</span>
+                        <div className="checkContainer">
+                            <input type="checkbox" value={terms} onChange={(e) => setTerms(e.target.checked)} required />
+                        </div>
+                        
+                    </label>
 
-            </form>
+                    <div className="buttons">
+                        <button type="submit">Registrar</button>
+                        <button className='terms'>
+                            <Link href={'terms'}>Términos y condic</Link>
+                        </button>
+                    </div>
 
-            <div className='options'>
-                <span>Ya tienes cuenta? <Link href={'login/'}>Iniciar sesion</Link></span>
+                </form>
+
+                <div className='options'>
+                    <span>Ya tienes cuenta? <Link href={'login/'}>Iniciar sesion</Link></span>
+                </div>
             </div>
-
-        </>
+        </div>
     );
 }

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -33,31 +34,38 @@ export default function LoginPage() {
 
 
     return (
-        <>
-        <section className='hero'>
-                <p>LOGO</p>
-                <Link href={'/'}>x</Link>
-        </section>
+        <div className='login_page'>
+            <div className="container">
+                <section className='hero'>
+                    <h2>LOGO EMPRESA</h2>
+                    <Link className='closeBtn' href={'/'}>
+                        <Image src={'/close.svg'} alt='close' width={25} height={25} />
+                    </Link>
+                </section>
 
-        <form onSubmit={handleSubmit}>
-            <label>
-                Correo Electrónico:
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
-            </label>
-            <br />
-            <label>
-                Contraseña:
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-            </label>
-            <br />
-            <button type="submit">Ingresar</button>
-        </form>
+                <form onSubmit={handleSubmit}>
+                    <label>
+                        Email
+                        <br />
+                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
+                    </label>
+                    
+                    <label>
+                        Contraseña
+                        <br />
+                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    </label>
+                    
+                    <div className="buttons">
+                        <button type="submit">Ingresar</button>
+                        <Link href={'/terms'}>Términos y condic</Link>
+                    </div>
+                </form>
 
-        <br />
-
-        <div className='options'>
-            <span>No tienes cuenta? <Link href={'register/'}>Registrate</Link></span>
+                <div className='options'>
+                    <span>No tienes cuenta? <Link href={'register/'}>Registrate</Link></span>
+                </div>
+            </div>
         </div>
-        </>
     );
 }
