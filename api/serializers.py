@@ -1,9 +1,20 @@
 from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
 from .models import Tournament
 
 User = get_user_model()
+
+
+class LoginTokenSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        # Añade claims extras
+        token['email'] = user.email
+        return token
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -37,27 +48,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         )
         user.set_password(validated_data['password1'])
         user.save()
-        return user
-    
-
-class ChangePasswordSerializer(serializers.Serializer):
-    old_password = serializers.CharField()
-    new_password1 = serializers.CharField(min_length=8)
-    new_password2 = serializers.CharField(min_length=8)
-
-    def validate(self, attrs):
-        if attrs['new_password1'] != attrs['new_password2']:
-            raise serializers.ValidationError("Las nuevas contraseñas no coinciden.")
-        return attrs
-
-    def save(self, **kwargs):
-        user = self.context['request'].user
-        if not user.check_password(self.validated_data['old_password']):
-            raise serializers.ValidationError("La contraseña actual es incorrecta.")
-        
-        user.set_password(self.validated_data['new_password1'])
-        user.save()
-        
         return user
        
 

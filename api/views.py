@@ -1,21 +1,27 @@
 from django.contrib.auth import authenticate, login, logout
 
-from rest_framework import status
-from rest_framework import generics, status, authentication, permissions 
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework import generics, status, authentication, permissions, filters
 from rest_framework.response import Response
-from rest_framework.views import APIView
-from rest_framework import filters
+from rest_framework.permissions import AllowAny
+
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from django_filters.rest_framework import DjangoFilterBackend
 
-from .serializers import RegisterSerializer, ChangePasswordSerializer, TournamentSerializer
+from .serializers import RegisterSerializer, TournamentSerializer, LoginTokenSerializer
 from .models import Tournament
 
 # Create your views here.
 
+
+class LoginToken(TokenObtainPairView):
+    serializer_class = LoginTokenSerializer
+
+
 class RegisterAPI(generics.CreateAPIView):
     serializer_class = RegisterSerializer
+    permission_classes = ()
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -27,49 +33,10 @@ class RegisterAPI(generics.CreateAPIView):
         }, status=status.HTTP_201_CREATED)
 
 
-class LoginAPI(APIView):
-    permission_classes = [AllowAny]
-
-    def post(self, request):
-        email = request.data.get('email')
-        password = request.data.get('password')
-        user = authenticate(request, username=email, password=password)
-        
-        if user:
-            login(request, user)
-            return Response({"message": "Login exitoso"}, status=200)
-        
-        return Response({"error": "Credenciales inválidas"}, status=401)
-
-
-class LogoutAPI(APIView):
-    def post(self, request):
-        logout(request)
-        return Response({"message": "Logout exitoso"}, status=200)
-
-
-class ChangePasswordAPI(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request):
-        serializer = ChangePasswordSerializer(
-            data=request.data, 
-            context={'request': request}
-        )
-        
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        
-        return Response({"message": "Contraseña cambiada"}, status=200)
-
-
 class TournamentListCreateAPI(generics.ListCreateAPIView):
     queryset = Tournament.objects.all()
     serializer_class = TournamentSerializer
-    authentication_classes = [
-        authentication.SessionAuthentication,
-        authentication.BasicAuthentication
-    ]
+    authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
