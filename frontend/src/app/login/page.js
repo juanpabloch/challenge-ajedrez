@@ -8,10 +8,13 @@ import Image from 'next/image'
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
+
     const router = useRouter();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError('');
 
         const res = await fetch('/api/auth/login', {
             method: 'POST',
@@ -20,15 +23,14 @@ export default function LoginPage() {
         });
 
         const response = await res.json();
-        const { access, refresh } = response;
-        localStorage.setItem('accessToken', access);
-        localStorage.setItem('refreshToken', refresh);
-
+        
         if(res.ok){
+            const { access, refresh } = response;
+            localStorage.setItem('accessToken', access);
+            localStorage.setItem('refreshToken', refresh);
             router.push('/tournaments');
         }else {
-            const err = await res.json();
-            console.log(err);
+            setError(response.detail || 'Error al iniciar sesión.');
         }
     };
 
@@ -42,6 +44,12 @@ export default function LoginPage() {
                         <Image src={'/close.svg'} alt='close' width={25} height={25} />
                     </Link>
                 </section>
+
+                {error && (
+                    <p style={{ color: 'red', marginBottom: '1rem' }}>
+                    ⚠️ {error}
+                    </p>
+                )}
 
                 <form onSubmit={handleSubmit}>
                     <label>

@@ -5,8 +5,8 @@ import Image from 'next/image';
 
 import { useRouter } from 'next/navigation';
 
-export default function Navbar() {
-    const route = useRouter()
+export default function Navbar({showBack}) {
+    const router = useRouter()
 
     const handleLogout = async() => {
         await fetch('/api/auth/logout', {
@@ -17,11 +17,21 @@ export default function Navbar() {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
 
-        route.push("/")
+        router.push("/")
     }
 
     return (
         <nav>
+            {showBack && (
+                <button
+                    onClick={() => router.back()}
+                    aria-label="Volver"
+                    className='backBtn'
+                >
+                    <Image src={'/arrow-left.svg'} alt='Volver' width={60} height={60} title='Volver'/>
+                </button>
+            )}
+
             {/* Logo */}
             <Link href="/">
                 <span>LOGO EMPRESA</span>

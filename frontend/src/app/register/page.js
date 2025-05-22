@@ -15,9 +15,11 @@ export default function RegisterPage() {
     const [terms, setTerms] = useState(false);
     const router = useRouter();
 
+    const apiUrl = process.env.NEXT_PUBLIC_DJANGO_URL;
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await fetch('http://127.0.0.1:8004/api/register/', {
+        const res = await fetch(`${apiUrl}/api/register/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 

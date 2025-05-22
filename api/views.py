@@ -48,9 +48,6 @@ class TournamentListCreateAPI(generics.ListCreateAPIView):
 class TournamentDetailAPI(generics.RetrieveUpdateDestroyAPIView):
     queryset = Tournament.objects.all()
     serializer_class = TournamentSerializer
-    authentication_classes = [
-        authentication.SessionAuthentication,
-        authentication.BasicAuthentication
-    ]
+    authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 

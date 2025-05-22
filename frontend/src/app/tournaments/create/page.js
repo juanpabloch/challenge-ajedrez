@@ -18,7 +18,8 @@ export default function RegisterPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        const res = await fetchWithAuth('http://127.0.0.1:8004/api/tournaments/',
+        const apiUrl = process.env.NEXT_PUBLIC_DJANGO_URL;
+        const res = await fetchWithAuth(`${apiUrl}/api/tournaments/`,
             {}, 
             'POST', 
             { 

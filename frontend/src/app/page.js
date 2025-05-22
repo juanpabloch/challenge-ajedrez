@@ -1,18 +1,11 @@
 'use client'
-import { useEffect, useState } from 'react';
+
 import { useRouter } from 'next/navigation';
 import Link from 'next/link'
 
 
 export default function HomePage() {
     const router = useRouter();
-    const aLinks = document.querySelectorAll('li');
-    aLinks.forEach((link) => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            console.log(link);
-        });
-    });
 
     return (
 
@@ -54,10 +47,6 @@ export default function HomePage() {
                     </div>
                 </section>
             </div>
-
-            {/* <div className="background">
-                <div className='rombo'></div>
-            </div> */}
         </div>
     );
 }
