@@ -7,6 +7,7 @@
 
     --border-radius: 50px;
     --border-color: #282828;
+    --border-color-light: #282828a9;
 
     --font-color-black: #101010;
 }
@@ -54,28 +55,31 @@ body{
         border-radius: var(--border-radius);
 
         .header{
-            max-width: 270px;
+            max-width: 400px;
             margin: 0 auto;
             text-align: justify;
 
             h1{
-                font-size: 3rem;
+                text-align: center;
+                font-size: 4rem;
             }
 
             p{
-                font-size: 10px;
+                font-size: .9rem;
                 margin-top: 15px;
-                margin-bottom: 35px;
+                margin-bottom: 50px;
             }
         }
 
         .main{
+            width: 100%;
+
             ul li{
                 margin: 5px 0;
                 list-style: none;
                 background-color: var(--background);
                 text-align: center;
-                font-size: 1.5rem;
+                font-size: 1.8rem;
 
                 a{
                     text-decoration: none;
@@ -87,28 +91,55 @@ body{
 
             .options ul{
                 display: flex;
-                justify-content: center;
+                justify-content: space-between;
                 align-items: center;
                 column-gap: 5px;
 
                 li{
                     margin: 5px 0px;
-                    width: 90px;
+                    width: 130px;
                     height: 35px;
+
+                    span{
+                        text-transform: lowercase;
+                    }
                 }
 
                 /* primer y segundo elemeno font size 9px y el 3er 20px */
                 li:nth-child(1),
                 li:nth-child(2){
-                    font-size: 9px;
+                    font-size: 12px;
                 }
 
                 li:nth-child(3){
-                    font-size: 20px;
+                    font-size: 22px;
                 }
             }
         }
     }
+
+    /* .background{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        padding: 30px;
+        z-index: -1;
+
+        .rombo{
+            width: 100%;
+            height: 100%;
+            background: url('/background.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+
+            @media (width <= 1030px) {
+                background: none;
+            }
+        }
+    } */
 }
 
 /* LOGIN - REGISTER */
@@ -297,7 +328,7 @@ body{
         justify-content: space-between;
         align-items: center;
         flex-direction: column;
-        height: 75vh;
+        height: 60vh;
         /* padding-bottom: 280px; */
 
 
@@ -305,16 +336,16 @@ body{
             width: 100%;
             border-collapse: 'collapse';
             color: var(--background-yellow); 
-            padding: 40px;
+            padding: 20px 40px;
 
             th{
                 text-transform: uppercase;
-                font-size: 2.188rem;
+                font-size: 2rem;
                 padding: 0.5rem 1rem;
             }
 
             td {
-                font-size: 1.7rem;
+                font-size: 1.6rem;
                 padding: 0.5rem 1rem;
                 text-align: center;
             }
@@ -330,6 +361,16 @@ body{
             .tournaments__empty{
                 text-align: center;
             }
+
+            .tournament__row{
+                cursor: pointer;
+                transition: all 0.2s ease-in-out;
+
+                &:hover{
+                    background-color: var(--border-color-light);
+                    transition: all 0.1s ease-in-out;
+                }
+            }
         }
 
         .tournaments__table th,
@@ -342,10 +383,10 @@ body{
             text-align: center;
             background-color: var(--background-yellow);
             color: var(--background-footer);
-            font-size: 2rem;
+            font-size: 1.7rem;
             font-weight: bold;
             text-transform: uppercase;
-            padding: 20px 50px;
+            padding: 18px 48px;
             margin-bottom: 30px;
             border: none;
             cursor: pointer;
@@ -358,11 +399,40 @@ body{
         }
     }
 
+    .tournaments__filter{
+        margin-bottom: 20px;
+        padding: 10px 40px;
+
+        label{
+            font-size: 1.6rem;
+            text-align: center;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            color: var(--background-yellow);
+            margin-right: 10px;
+        }
+
+        select{
+            width: 270px;
+            padding: 5px 10px;
+            font-size: 1.2rem;
+            border: 1px solid var(--background-yellow);
+            background-color: var(--background);
+            color: var(--background-yellow);
+            text-align: center;
+            text-transform: uppercase;
+
+            &:focus-visible{
+                outline: none;
+            }
+        }
+    }
+
     footer{
-        position: fixed;
+        /* position: fixed;
         bottom: 0;
         left: 0;
-        right: 0;
+        right: 0; */
         background-color: var(--background-footer);
         color: var(--background-yellow);
         padding: 30px 60px;
@@ -372,7 +442,7 @@ body{
         align-items: center;
 
         p{
-            font-size: 8rem;
+            font-size: 5rem;
             font-weight: bold;
             text-transform: uppercase;
         }
@@ -514,6 +584,36 @@ body{
                     }
                 }
             }
+        }
+    }
+}
+
+
+nav{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+    padding: 2rem;
+
+    a{
+        text-decoration: none;
+        font-size: 2rem;
+        color: var(--background-yellow);
+    }
+
+    .actions{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+
+        button{
+            background-color: var(--background-yellow);
+            border: none;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
         }
     }
 }

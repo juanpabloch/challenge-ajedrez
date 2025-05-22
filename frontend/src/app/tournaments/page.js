@@ -11,6 +11,8 @@ import Navbar from '../../components/navbar';
 export default function TournamentsPage() {
     const router = useRouter();
     const [tournaments, setTournaments] = useState([])
+    const [filterTournaments, setFiltered] = useState([]);
+    const [filter, setFilter] = useState('')
 
     useEffect(() => {
         async function loadTournaments() {
@@ -28,8 +30,19 @@ export default function TournamentsPage() {
                 console.error('Error de red', error);
             }
         }
-            loadTournaments();
+        
+        loadTournaments();
     }, [router]);
+
+    useEffect(() => {
+        setFiltered(
+            tournaments.filter(t => {
+                if (filter === '') return true;
+                return t.state === filter;
+            })
+        );
+    }, [filter, tournaments]);
+
 
     function tournamentRow(tournament) {
         const iso = `${tournament.start_date}T${tournament.start_time}`;
@@ -40,6 +53,7 @@ export default function TournamentsPage() {
         });
         const mode = tournament.mode.charAt(0).toUpperCase() + tournament.mode.slice(1);
         const modeImage = tournament.mode === 'bullet' ? '/bullet.svg' : '/standard.svg';
+        const state = tournament.state === 'pending' ? 'Pendiente' : tournament.state === 'in_progress' ? 'En curso' : 'Finalizado';
 
         return (
             <>
@@ -47,7 +61,7 @@ export default function TournamentsPage() {
                 <td>{dateStr} {timeStr}</td>
                 <td style={{ textAlign: 'left' }}><Image src={modeImage} alt='' width={20} height={20} /> {mode}</td>
                 <td>{tournament.prize} PTS</td>
-                <td>{tournament.state}</td>
+                <td>{state}</td>
             </>
         );
     }
@@ -55,11 +69,19 @@ export default function TournamentsPage() {
     return (
         <div className='tournaments_page'>
             <Navbar />
-
+            <div className="tournaments__filter">
+                <label htmlFor="stateFilter">Filtrar por estado</label>
+                <select id="stateFilter" onChange={(e) => setFilter(e.target.value)}>
+                    <option value="">Todos</option>
+                    <option value="pending">Pendientes</option>
+                    <option value="in_progress">En curso</option>
+                    <option value="finish">Finalizados</option>
+                </select>
+            </div>
             <div className="tournaments">
                 <table className='tournaments__table' cellSpacing="0" cellPadding="0">
                     <thead>
-                        {tournaments.length > 0 ? (   
+                        {filterTournaments.length > 0 ? (   
                             <tr>
                                 <th>Torneo</th>
                                 <th>Fecha de inicio</th>
@@ -76,14 +98,14 @@ export default function TournamentsPage() {
                     </thead>
 
                     <tbody>
-                        {tournaments.filter(t => t.state !== 'finish').length > 0 ? (
-                            tournaments.map(t => (
+                        {filterTournaments.filter(t => t.state !== 'finish').length > 0 ? (
+                            filterTournaments.map(t => (
                             <tr key={t.id} 
                                 className={
                                     t.state === 'pending'
-                                    ? 'row-pending'
+                                    ? 'row-pending tournament__row'
                                     : t.state === 'in_progress'
-                                    ? 'row-in-progress': ''
+                                    ? 'row-in-progress tournament__row': ''
                             }>
                                 {tournamentRow(t)}
                             </tr>
@@ -102,7 +124,7 @@ export default function TournamentsPage() {
             </div>
 
             <footer>
-                <Image src={'/tournament.svg'} alt='tournament' width={100} height={100} />
+                <Image src={'/tournament.svg'} alt='tournament' width={80} height={80} />
                 <p>Torneos</p>
             </footer>
         </div>

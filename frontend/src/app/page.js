@@ -48,12 +48,16 @@ export default function HomePage() {
                                 <Link href={'/user-manual'}>Manual de usuario</Link>
                             </li>
                             <li onClick={() => router.push('/faqs')}>
-                                <Link href={'/faqs'}>F.A.Qs</Link>
+                                <Link href={'/faqs'}>F.A.Q<span>s</span></Link>
                             </li>
                         </ul>    
                     </div>
                 </section>
             </div>
+
+            {/* <div className="background">
+                <div className='rombo'></div>
+            </div> */}
         </div>
     );
 }
